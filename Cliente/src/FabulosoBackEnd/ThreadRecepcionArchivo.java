@@ -13,6 +13,7 @@ public class ThreadRecepcionArchivo  implements Runnable {
 	private InputStream is;
 	private  DataOutputStream output ;
 	private boolean pausa;
+	private boolean cumpli;
 	public ThreadRecepcionArchivo ( FileOutputStream pfos,BufferedOutputStream pbos, byte[] pcontents,InputStream pis,DataOutputStream poutput)
 	{
 		pausa =false;
@@ -21,6 +22,7 @@ public class ThreadRecepcionArchivo  implements Runnable {
 		contents=pcontents ;
 		is=pis;
 		output =poutput ;
+		cumpli = false;
 		
 		
 	}
@@ -40,7 +42,8 @@ public class ThreadRecepcionArchivo  implements Runnable {
 	@Override
     public void run() {
        
-		
+		if(!cumpli)
+		{
 		
 		try
 		{
@@ -61,6 +64,7 @@ public class ThreadRecepcionArchivo  implements Runnable {
 
 				    
 				        }
+				        cumpli = true;
 
 				        bos.flush(); 
 				        
@@ -72,7 +76,8 @@ public class ThreadRecepcionArchivo  implements Runnable {
 		{
 			e.printStackTrace();
 		}
-		
+
+		}
               }
 
 	

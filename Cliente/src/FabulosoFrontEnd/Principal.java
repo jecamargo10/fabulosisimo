@@ -98,7 +98,7 @@ public String archivos;
 				else
 				{
 					lblNoConectado.setText("No conectado");
-					JOptionPane.showMessageDialog(frame, "No ha sido posible la conexion exitosamente");
+					JOptionPane.showMessageDialog(frame, "No ha sido posible la conexion");
 
 
 					
@@ -126,7 +126,7 @@ public String archivos;
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.WHITE, null, null, null));
 		panel_3.setBackground(Color.PINK);
-		panel_3.setBounds(0, 24, 308, 79);
+		panel_3.setBounds(0, 24, 308, 183);
 		panel.add(panel_3);
 		panel_3.setLayout(new GridLayout(3, 1, 0, 0));
 		
@@ -139,16 +139,6 @@ public String archivos;
 		JLabel lbl3ArchivoRecibir = new JLabel("");
 		panel_3.add(lbl3ArchivoRecibir);
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.WHITE, null, null, null));
-		panel_4.setBackground(Color.PINK);
-		panel_4.setBounds(0, 102, 308, 26);
-		panel.add(panel_4);
-		
-		JLabel lblMisArchivos = new JLabel("Mis archivos");
-		lblMisArchivos.setForeground(Color.WHITE);
-		panel_4.add(lblMisArchivos);
-		
 		JPanel panel_6 = new JPanel();
 		panel_6.setForeground(Color.WHITE);
 		panel_6.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.WHITE, null, null, null));
@@ -159,22 +149,6 @@ public String archivos;
 		JLabel lblConexin = new JLabel("Conexi\u00F3n");
 		lblConexin.setForeground(Color.WHITE);
 		panel_6.add(lblConexin);
-		
-		JPanel panel_7 = new JPanel();
-		panel_7.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel_7.setBackground(Color.PINK);
-		panel_7.setBounds(0, 128, 308, 79);
-		panel.add(panel_7);
-		panel_7.setLayout(new GridLayout(3, 1, 0, 0));
-		
-		JLabel lblmisarchivos1 = new JLabel("");
-		panel_7.add(lblmisarchivos1);
-		
-		JLabel lblmisarchivos2 = new JLabel("");
-		panel_7.add(lblmisarchivos2);
-		
-		JLabel lblmisarchivos3 = new JLabel("");
-		panel_7.add(lblmisarchivos3);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -222,9 +196,10 @@ public String archivos;
 		btnVerRespositorio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String ruta = mundo.darRuta();
+				ruta += "\\src"	;
 				try {
 					System.out.println(ruta);
-					Runtime.getRuntime().exec("explorer.exe /select," + ruta+"/");
+					Runtime.getRuntime().exec("explorer.exe /select," + ruta);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -239,12 +214,13 @@ public String archivos;
 			public void actionPerformed(ActionEvent arg0) {
 				
 		        String aPedir= JOptionPane.showInputDialog("Ingrese el nombre del archivo a descargar");
-		        
 System.out.println(aPedir);
 String papitas [] = archivos.split(";");
 for (int i = 0; i < papitas.length; i++) {
 	String archivo [] = papitas[i].split(",");
-	if(archivo[0].toLowerCase().startsWith(aPedir))
+    System.out.println("ARCHIVO:"+archivo[0]);
+
+	if(archivo[0].toLowerCase().startsWith(aPedir.toLowerCase()))
 	{
 		aPedir=archivo[0];
 		break;
@@ -261,7 +237,7 @@ mundo.solicitarArchivo();
 
 		btnArchivosDisponibles.setForeground(Color.WHITE);
 		btnArchivosDisponibles.setBackground(Color.PINK);
-		btnArchivosDisponibles.setBounds(10, 134, 144, 22);
+		btnArchivosDisponibles.setBounds(0, 134, 154, 22);
 		panel_1.add(btnArchivosDisponibles);
 		btnArchivosDisponibles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
@@ -274,9 +250,9 @@ mundo.solicitarArchivo();
 							String archivos [] = papitas[1].split(",");
 							String archivus [] = papitas[2].split(",");
 
-							lbl1ArchivoRecibir.setText("Nombre: " + archivo[0] + "Peso: " + archivo[1]);
-							lbl2ArchivoRecibir.setText("Nombre: " + archivos[0] + "Peso: " + archivos[1]);
-							lbl3ArchivoRecibir.setText("Nombre: " + archivus[0] + "Peso: " + archivus[1]);
+							lbl1ArchivoRecibir.setText("<html>Nombre: " + archivo[0] + " Peso: " + archivo[1] +"</html>");
+							lbl2ArchivoRecibir.setText("<html>Nombre: " + archivos[0] + " Peso: " + archivos[1] +"</html>");
+							lbl3ArchivoRecibir.setText("<html>Nombre: " + archivus[0] + " Peso: " + archivus[1] +"</html>");
 
 					 }
 					 else if (papitas.length == 2)
@@ -284,14 +260,14 @@ mundo.solicitarArchivo();
 							String archivo [] = papitas[0].split(",");
 							String archivos [] = papitas[1].split(",");
 
-							lbl1ArchivoRecibir.setText("Nombre: " + archivo[0] + "Peso: " + archivo[1]);
-							lbl2ArchivoRecibir.setText("Nombre: " + archivos[0] + "Peso: " + archivos[1]);
+							lbl1ArchivoRecibir.setText("<html>Nombre: " + archivo[0] + " Peso: " + archivo[1] +"</html>");
+							lbl2ArchivoRecibir.setText("<html>Nombre: " + archivos[0] + " Peso: " + archivos[1] +"</html>");
 
 					 }
 					 else
 					 {
 						 String archivo [] = papitas[0].split(",");
-							lbl1ArchivoRecibir.setText("Nombre: " + archivo[0] + "Peso: " + archivo[1]);
+							lbl1ArchivoRecibir.setText("<html>Nombre: " + archivo[0] + " Peso: " + archivo[1] +"</html>");
 					 }
 				
 			}
