@@ -72,7 +72,7 @@ public class BackEnd {
 		  try {
 				 System.out.println("Writing.......");
 				 arch= aPedir;
-			output.writeUTF(aPedir);
+			output.writeUTF("ARCHIVO:"+aPedir);
 			  int tamanio = input.readInt();
 		      System.out.println("LONGITUD: " +tamanio);
 			  contents = new byte[tamanio];
@@ -146,7 +146,7 @@ try
 			  if (salDevueta.equals("ZUPP"))
 			  {
 				  // Ya estoy hablando con el servidor
-				  output.writeBytes(archivos); // UTF is a string encoding
+				  output.writeUTF(archivos); // UTF is a string encoding
 				   archivosDisponibles = input.readUTF();
 				  System.out.println("Received: "+ archivosDisponibles ); 
 			  }

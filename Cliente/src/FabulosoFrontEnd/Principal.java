@@ -197,7 +197,7 @@ public String archivos;
 				mundo.pausar();
 			}
 		});
-		btnNewButton.setBounds(129, 21, 89, 23);
+		btnNewButton.setBounds(146, 21, 89, 23);
 		panel_5.add(btnNewButton);
 		
 		JButton btnIniciar = new JButton("Reanudar");
@@ -209,11 +209,11 @@ public String archivos;
 				mundo.solicitarArchivo();
 			}
 		});
-		btnIniciar.setBounds(228, 21, 89, 23);
+		btnIniciar.setBounds(235, 21, 89, 23);
 		panel_5.add(btnIniciar);
 		
-		JButton btnRefrescar = new JButton("Pedir Archivo");
-		btnRefrescar.setBounds(10, 21, 109, 22);
+		JButton btnRefrescar = new JButton("Pedir Archivos");
+		btnRefrescar.setBounds(10, 21, 126, 22);
 		panel_5.add(btnRefrescar);
 		btnRefrescar.setBackground(Color.PINK);
 		btnRefrescar.setForeground(Color.WHITE);
@@ -232,7 +232,7 @@ public String archivos;
 		});
 		btnVerRespositorio.setForeground(Color.WHITE);
 		btnVerRespositorio.setBackground(Color.PINK);
-		btnVerRespositorio.setBounds(327, 21, 126, 23);
+		btnVerRespositorio.setBounds(334, 21, 126, 23);
 		panel_5.add(btnVerRespositorio);
 		btnRefrescar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -267,11 +267,32 @@ mundo.solicitarArchivo();
 			{
 				  archivos =		mundo.pedirArchivos();
 					 String papitas [] = archivos.split(";");
-					 for (int i = 0; i < papitas.length; i++) {
-						String archivo [] = papitas[i].split(",");
-						lblMisArchivos.setText("Nombre: " + archivo[0] + "Peso: " + archivo[1]);
-						
-					}
+					 if (papitas.length == 3)
+					 {
+							String archivo [] = papitas[0].split(",");
+							String archivos [] = papitas[1].split(",");
+							String archivus [] = papitas[2].split(",");
+
+							lbl1ArchivoRecibir.setText("Nombre: " + archivo[0] + "Peso: " + archivo[1]);
+							lbl2ArchivoRecibir.setText("Nombre: " + archivos[0] + "Peso: " + archivos[1]);
+							lbl3ArchivoRecibir.setText("Nombre: " + archivus[0] + "Peso: " + archivus[1]);
+
+					 }
+					 else if (papitas.length == 2)
+					 {
+							String archivo [] = papitas[0].split(",");
+							String archivos [] = papitas[1].split(",");
+
+							lbl1ArchivoRecibir.setText("Nombre: " + archivo[0] + "Peso: " + archivo[1]);
+							lbl2ArchivoRecibir.setText("Nombre: " + archivos[0] + "Peso: " + archivos[1]);
+
+					 }
+					 else
+					 {
+						 String archivo [] = papitas[0].split(",");
+							lbl1ArchivoRecibir.setText("Nombre: " + archivo[0] + "Peso: " + archivo[1]);
+					 }
+				
 			}
 		});
 		
