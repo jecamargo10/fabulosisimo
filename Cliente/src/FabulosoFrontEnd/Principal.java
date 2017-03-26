@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import java.awt.Color;
@@ -192,26 +193,47 @@ public String archivos;
 		btnNewButton.setForeground(Color.WHITE);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				mundo.pausar();
 			}
 		});
-		btnNewButton.setBounds(186, 21, 89, 23);
+		btnNewButton.setBounds(129, 21, 89, 23);
 		panel_5.add(btnNewButton);
 		
-		JButton btnIniciar = new JButton("Iniciar");
+		JButton btnIniciar = new JButton("Reanudar");
 		btnIniciar.setBackground(Color.PINK);
 		btnIniciar.setForeground(Color.WHITE);
 		btnIniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				mundo.despausar();
+				mundo.solicitarArchivo();
 			}
 		});
-		btnIniciar.setBounds(312, 21, 89, 23);
+		btnIniciar.setBounds(228, 21, 89, 23);
 		panel_5.add(btnIniciar);
 		
 		JButton btnRefrescar = new JButton("Pedir Archivo");
-		btnRefrescar.setBounds(26, 21, 127, 22);
+		btnRefrescar.setBounds(10, 21, 109, 22);
 		panel_5.add(btnRefrescar);
 		btnRefrescar.setBackground(Color.PINK);
 		btnRefrescar.setForeground(Color.WHITE);
+		
+		JButton btnVerRespositorio = new JButton("Ver respositorio");
+		btnVerRespositorio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String ruta = mundo.darRuta();
+				try {
+					Runtime.getRuntime().exec("explorer.exe /select," + ruta);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnVerRespositorio.setForeground(Color.WHITE);
+		btnVerRespositorio.setBackground(Color.PINK);
+		btnVerRespositorio.setBounds(327, 21, 126, 23);
+		panel_5.add(btnVerRespositorio);
 		btnRefrescar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -228,7 +250,8 @@ for (int i = 0; i < papitas.length; i++) {
 	}
 	
 }
-mundo.solicitarArchivo(aPedir);
+mundo.iniciarArchivo(aPedir);
+mundo.solicitarArchivo();
 		
 		 
 			}
@@ -237,7 +260,7 @@ mundo.solicitarArchivo(aPedir);
 
 		btnArchivosDisponibles.setForeground(Color.WHITE);
 		btnArchivosDisponibles.setBackground(Color.PINK);
-		btnArchivosDisponibles.setBounds(0, 135, 154, 22);
+		btnArchivosDisponibles.setBounds(10, 134, 144, 22);
 		panel_1.add(btnArchivosDisponibles);
 		btnArchivosDisponibles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)

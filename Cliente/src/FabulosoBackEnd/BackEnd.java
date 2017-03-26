@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 public class BackEnd {
 
@@ -19,17 +20,28 @@ public class BackEnd {
 	private final String saludo = "ZUPP";
 	private final String archivos = "ARCHIVOS";
 	private String donwloadDirectory ;
-
+	private   DataInputStream input;
+	private  DataOutputStream output ;
+	private ArrayList<String> misarchivos;
+	private boolean pausa;
+	private 		        FileOutputStream fos;
+	private   BufferedOutputStream bos ;
+	private   byte[] contents ;
+	private InputStream is;
+	private String arch;
+	
 	public BackEnd ()
 	{
 		  File directory = new File(".");
+		  misarchivos = new ArrayList<String>();
+		  pausa = false;
 		  try {
 			donwloadDirectory = directory.getCanonicalPath();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 	}
 
 	
@@ -38,6 +50,8 @@ public class BackEnd {
 		  		  try{ 
 				 
 		  		  s = new Socket(ip, serverPort); 
+		  		input = new DataInputStream( s.getInputStream()); 
+		  		output = new DataOutputStream( s.getOutputStream()); 
 
 		}
 		catch (Exception e){ 
@@ -53,41 +67,51 @@ public class BackEnd {
 				  return exito;
 
 		}
+	public void iniciarArchivo(String aPedir)
+	{
+		  try {
+				 System.out.println("Writing.......");
+				 arch= aPedir;
+			output.writeUTF(aPedir);
+			  int tamanio = input.readInt();
+		      System.out.println("LONGITUD: " +tamanio);
+			  contents = new byte[tamanio];
+			     //Initialize the FileOutputStream to the output file's full path.
+		         fos = new FileOutputStream(donwloadDirectory + "/"+aPedir);
+		         bos = new BufferedOutputStream(fos);
+		         is = s.getInputStream();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+	}
 
 
-	public void solicitarArchivo(String aPedir) 
+	public void solicitarArchivo() 
 	{
 
 try
 {
 
-		
-		 	 DataInputStream input = new DataInputStream( s.getInputStream()); 
-		  DataOutputStream output = new DataOutputStream( s.getOutputStream()); 
-		  
-			  //Step 1 
-			  System.out.println("Writing.......");
-			  output.writeUTF(aPedir);
-			  int tamanio = input.readInt();
-		      System.out.println("LONGITUD: " +tamanio);
-			  byte[] contents = new byte[tamanio];
-		        
-			
-	            
-		        //Initialize the FileOutputStream to the output file's full path.
-		        FileOutputStream fos = new FileOutputStream(donwloadDirectory + "/"+aPedir);
-		        BufferedOutputStream bos = new BufferedOutputStream(fos);
-		        InputStream is = s.getInputStream();
-		        
-		        //No of bytes read in one read() call
+		 //No of bytes read in one read() call
 		        int bytesRead = 0; 
 		        
-		        while((bytesRead=is.read(contents))!=-1)
-		        	System.out.println("Paquete recibido" + bytesRead);
-		            bos.write(contents, 0, bytesRead); 
+		        while((bytesRead=is.read(contents))!=-1 && !pausa )
+		        {
 		        
+		        	System.out.println("Paquete recibido: " + bytesRead);
+		            bos.write(contents, 0, bytesRead); 
+					output.writeUTF("NEXT_PACKAGE");
+
+		    
+		        }
+		     
+		        if(contents[contents.length-1] > 0)
+		        {
 		        bos.flush(); 
-			  
+		        misarchivos.add(donwloadDirectory + "/"+arch);
+		        }
 		
 	} 
 catch(Exception e)
@@ -106,8 +130,6 @@ try
 {
 
 		
-		 	 DataInputStream input = new DataInputStream( s.getInputStream()); 
-		  DataOutputStream output = new DataOutputStream( s.getOutputStream()); 
 		  
 			  //Step 1 
 			
@@ -146,7 +168,6 @@ return archivosDisponibles;
 	      boolean disponible = true; 
 		  try {  
 	             
-			  DataOutputStream output = new DataOutputStream( s.getOutputStream()); 
 			  output.writeUTF("VIVE");
 			  output.flush();
 
@@ -167,7 +188,21 @@ return archivosDisponibles;
 
 	      return disponible;   
 	  }
-
-
+public ArrayList <String> getMisarchivos()
+{
+return misarchivos;	
+}
+public void pausar()
+{
+pausa = true;	
+}
+public void despausar()
+{
+pausa = false;	
+}
+public String darRuta()
+{
+	return  donwloadDirectory;
+}
 }
 
