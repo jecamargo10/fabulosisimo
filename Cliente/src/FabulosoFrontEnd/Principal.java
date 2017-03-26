@@ -223,7 +223,8 @@ public String archivos;
 			public void actionPerformed(ActionEvent e) {
 				String ruta = mundo.darRuta();
 				try {
-					Runtime.getRuntime().exec("explorer.exe /select," + ruta);
+					System.out.println(ruta);
+					Runtime.getRuntime().exec("explorer.exe /select," + ruta+"/");
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

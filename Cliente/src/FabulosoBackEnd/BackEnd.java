@@ -29,6 +29,7 @@ public class BackEnd {
 	private   byte[] contents ;
 	private InputStream is;
 	private String arch;
+	
 private ThreadRecepcionArchivo superThread;
 	
 	public BackEnd ()
@@ -37,7 +38,7 @@ private ThreadRecepcionArchivo superThread;
 		  misarchivos = new ArrayList<String>();
 		  pausa = false;
 		  try {
-			donwloadDirectory = directory.getCanonicalPath();
+			donwloadDirectory = directory.getCanonicalPath() ;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -83,7 +84,6 @@ private ThreadRecepcionArchivo superThread;
 		         is = s.getInputStream();
 			  		superThread = new ThreadRecepcionArchivo(fos, bos, contents, is, output);
 
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

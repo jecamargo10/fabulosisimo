@@ -45,12 +45,14 @@ public class ThreadRecepcionArchivo  implements Runnable {
 		try
 		{
 
+
 				 //No of bytes read in one read() call
 				        int bytesRead = 0; 
 				        int valorRead = 0;
 				        while(valorRead != -1 && !pausa )
 				        {
-							output.writeUTF("NEXT_PACKAGE");
+
+				        	output.writeUTF("NEXT_PACKAGE");
 							
 							valorRead=(	bytesRead=is.read(contents));
 
@@ -61,6 +63,8 @@ public class ThreadRecepcionArchivo  implements Runnable {
 				        }
 
 				        bos.flush(); 
+				        
+				        
 				 
 				
 			} 
