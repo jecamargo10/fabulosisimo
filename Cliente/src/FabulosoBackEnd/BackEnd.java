@@ -29,6 +29,7 @@ public class BackEnd {
 	private   byte[] contents ;
 	private InputStream is;
 	private String arch;
+private ThreadRecepcionArchivo superThread;
 	
 	public BackEnd ()
 	{
@@ -80,6 +81,8 @@ public class BackEnd {
 		         fos = new FileOutputStream(donwloadDirectory + "/"+aPedir);
 		         bos = new BufferedOutputStream(fos);
 		         is = s.getInputStream();
+			  		superThread = new ThreadRecepcionArchivo(fos, bos, contents, is, output);
+
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -90,34 +93,8 @@ public class BackEnd {
 
 	public void solicitarArchivo() 
 	{
-
-try
-{
-
-		 //No of bytes read in one read() call
-		        int bytesRead = 0; 
-		        
-		        while((bytesRead=is.read(contents))!=-1 && !pausa )
-		        {
-		        
-		        	System.out.println("Paquete recibido: " + bytesRead);
-		            bos.write(contents, 0, bytesRead); 
-					output.writeUTF("NEXT_PACKAGE");
-
-		    
-		        }
-		     
-		        if(contents[contents.length-1] > 0)
-		        {
-		        bos.flush(); 
-		        misarchivos.add(donwloadDirectory + "/"+arch);
-		        }
-		
-	} 
-catch(Exception e)
-{
-	e.printStackTrace();
-}
+		  Thread t = new Thread(superThread);
+          t.start();
 	}
 	
 				
@@ -194,11 +171,11 @@ return misarchivos;
 }
 public void pausar()
 {
-pausa = true;	
+	superThread.pausar();	
 }
 public void despausar()
 {
-pausa = false;	
+	superThread.despausar();	
 }
 public String darRuta()
 {
