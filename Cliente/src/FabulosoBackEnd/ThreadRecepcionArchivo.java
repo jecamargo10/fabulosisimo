@@ -42,9 +42,7 @@ public class ThreadRecepcionArchivo  implements Runnable {
 	@Override
     public void run() {
        
-		if(!cumpli)
-		{
-		
+	
 		try
 		{
 
@@ -61,11 +59,10 @@ public class ThreadRecepcionArchivo  implements Runnable {
 
 				        	System.out.println("Paquete recibido: " + bytesRead);
 				            bos.write(contents, 0, bytesRead); 
-
+				            
 				    
 				        }
-				        cumpli = true;
-
+			
 				        bos.flush(); 
 				        
 				        
@@ -77,7 +74,8 @@ public class ThreadRecepcionArchivo  implements Runnable {
 			e.printStackTrace();
 		}
 
-		}
+		
+		
               }
 
 	
